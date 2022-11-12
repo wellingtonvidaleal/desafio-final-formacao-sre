@@ -73,5 +73,16 @@ variable "balanceadorDeCarga" {
 }
 
 variable "meuIP" {
-  default = "138.204.27.165/32"
+  default = "0.0.0.0/0"
+}
+
+
+#ec2.tf
+variable "amiWordpress" {
+  #AMI Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
+  default = "ami-0149b2da6ceec4bb0"
+}
+
+variable "chaveSSH" {
+  default = "testes-aws-wellington"
 }

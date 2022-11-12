@@ -227,3 +227,42 @@ resource "aws_security_group" "BancosDeDados" {
     Name = "BancosDeDados"
   }
 }
+
+#Define as primeiras máquinas de teste
+/* resource "aws_instance" "Wordpress" {
+  ami           = var.amiWordpress
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Wordpress"
+  }
+  
+  subnet_id = aws_subnet.Pub-AZ-A.id
+  associate_public_ip_address = true
+  key_name = var.chaveSSH
+  vpc_security_group_ids = [aws_security_group.ServidoresWeb.id]
+} */
+
+module "ec2_instance" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 3.0"
+
+  for_each = toset(["Wordpress01", "Wordpress02"])
+
+  name = "instance-${each.key}"
+
+  ami                    = var.amiWordpress
+  instance_type          = "t2.micro"
+  key_name               = var.chaveSSH
+  monitoring             = false
+  vpc_security_group_ids = [aws_security_group.ServidoresWeb.id]
+  subnet_id              = aws_subnet.Pub-AZ-A.id
+  associate_public_ip_address = true
+
+  tags = {
+    Name        = "${each.key}"
+    Environment = "test"
+  }
+}
+
+#Define o banco de dados MySQL
