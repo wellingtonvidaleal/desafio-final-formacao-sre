@@ -3,7 +3,7 @@
 
 variable "region" {
 #  default = "us-east-1"
-  default = "sa-east-1"
+  default = "us-east-1"
 }
 
 #vpc.tf
@@ -44,12 +44,12 @@ variable "subnetPriv-AZ-BCIDRblock" {
 
 variable "availabilityZoneA" {
   #default = "us-east-1a"
-  default = "sa-east-1a"
+  default = "us-east-1a"
 }
 
 variable "availabilityZoneB" {
   #default = "us-east-1b"
-  default = "sa-east-1b"
+  default = "us-east-1b"
 }
 
 variable "mapPublicIPPublicas" {
@@ -66,4 +66,12 @@ variable "ipsDeDestinosPublicosCIDRblock" {
 
 variable "redeDaVPCCIDRblock" {
   default = "10.132.0.0/16"
+}
+
+variable "balanceadorDeCarga" {
+  default = "0.0.0.0/0" #Substituir pelo IP do balanceador de carga
+}
+
+variable "meuIP" {
+  default = "138.204.27.165/32"
 }
