@@ -18,3 +18,8 @@ resource "aws_db_subnet_group" "dbSubrede" {
   name       = "db_grupo_subredes"
   subnet_ids = [aws_subnet.Priv_AZ_A.id, aws_subnet.Priv_AZ_B.id]
 }
+
+resource "local_file" "endpoint_do_banco_mysql" {
+  content = aws_db_instance.BancoDeDadosWordpress.endpoint
+  filename = "${path.module}/ansible/endpoint_do_banco_mysql.txt"
+}

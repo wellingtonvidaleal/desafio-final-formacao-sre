@@ -23,7 +23,7 @@ resource "aws_instance" "wordpress" {
               EOF */
 
 
-  provisioner "remote-exec" {
+/*   provisioner "remote-exec" {
     inline = ["echo 'Aguardando até o SSH estar disponivel'"]
 
     connection {
@@ -36,9 +36,14 @@ resource "aws_instance" "wordpress" {
 
   provisioner "local-exec" {
     command = "ansible-playbook ./ansible/wordpress.yml -i ${aws_instance.wordpress.public_ip} --user ${local.ssh_user} --key-file ${local.private_key_path}"
-  }
+  } */
 
   tags = {
     Name = "Wordpress"
   }
+}
+
+resource "local_file" "ip_do_wordpress" {
+  content = aws_instance.wordpress.public_ip
+  filename = "${path.module}/ansible/ip_do_wordpress.txt"
 }
