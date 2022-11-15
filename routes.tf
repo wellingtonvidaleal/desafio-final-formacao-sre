@@ -1,3 +1,4 @@
+#Define tabela de rotas "Publicas"
 resource "aws_default_route_table" "Publicas" {
   default_route_table_id = aws_vpc.VPC_Desafio_Final.default_route_table_id
 
