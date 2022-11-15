@@ -26,19 +26,19 @@ variable "vpcDnsHostNames" {
 }
 
 #Sub-redes
-variable "subnetPub-AZ-ACIDRblock" {
+variable "subnetPub_AZ_ACIDRblock" {
   default = "10.132.0.0/24"
 }
 
-variable "subnetPub-AZ-BCIDRblock" {
+variable "subnetPub_AZ_BCIDRblock" {
   default = "10.132.1.0/24"
 }
 
-variable "subnetPriv-AZ-ACIDRblock" {
+variable "subnetPriv_AZ_ACIDRblock" {
   default = "10.132.2.0/24"
 }
 
-variable "subnetPriv-AZ-BCIDRblock" {
+variable "subnetPriv_AZ_BCIDRblock" {
   default = "10.132.3.0/24"
 }
 
@@ -83,6 +83,10 @@ variable "amiWordpress" {
   default = "ami-0149b2da6ceec4bb0"
 }
 
+variable "instanceTypeWordpress" {
+  default = "t2.micro"
+}
+
 variable "chaveSSH" {
-  default = "testes-aws-wellington"
+  default = "devops"
 }
