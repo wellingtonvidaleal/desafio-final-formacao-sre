@@ -1,14 +1,14 @@
 locals {
   ssh_user         = "ubuntu"
   key_name         = "devops"
-  private_key_path = "~/Downloads/devops.pem"
+  private_key_path = "./devops.pem"
 }
 
 #Define a instância da máquina EC2
 resource "aws_instance" "wordpress" {
   ami                         = var.amiWordpress
   instance_type               = var.instanceTypeWordpress
-  key_name                    = var.chaveSSH
+  key_name                    = local.key_name
   monitoring                  = true
   vpc_security_group_ids      = [aws_security_group.ServidoresWeb.id]
   subnet_id                   = aws_subnet.Pub_AZ_A.id
@@ -23,7 +23,7 @@ resource "aws_instance" "wordpress" {
               EOF */
 
 
-  /* provisioner "remote-exec" {
+  provisioner "remote-exec" {
     inline = ["echo 'Aguardando até o SSH estar disponivel'"]
 
     connection {
@@ -35,8 +35,9 @@ resource "aws_instance" "wordpress" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook  -i ${aws_instance.name.public_ip}, --private-key ${local.private_key_path} wordpress.yaml"
-  } */
+    command = "ansible-playbook ./ansible/wordpress.yml -i ${aws_instance.wordpress.public_ip} --user ${local.ssh_user} --key-file ${local.private_key_path}"
+  }
+
   tags = {
     Name = "Wordpress"
   }
