@@ -1,8 +1,8 @@
 ---
   - name: Instalacao e configuracao do Wordpress
-    hosts: webserver_wordpress
+    hosts: all
     become: yes
-    #
+    
     roles:
       #- mysql
       - wordpress 
