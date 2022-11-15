@@ -1,13 +1,10 @@
-#main.tf
+#network.tf
 #-------------------------
 
 variable "region" {
   #  default = "us-east-1"
   default = "us-east-1"
 }
-
-#vpc.tf
-#-------------------------
 
 variable "vpcCIDRblock" {
   default = "10.132.0.0/16"
@@ -78,6 +75,7 @@ variable "meuIP" {
 
 
 #ec2.tf
+#-------------------------
 variable "amiWordpress" {
   #AMI Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
   default = "ami-0149b2da6ceec4bb0"
