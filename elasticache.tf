@@ -18,6 +18,5 @@ resource "aws_security_group" "elasticache" {
 
 resource "aws_elasticache_subnet_group" "this" {
   name       = "elasticache_subnet_group"
-  vpc_id     = aws_vpc.this.id
   subnet_ids = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
 }

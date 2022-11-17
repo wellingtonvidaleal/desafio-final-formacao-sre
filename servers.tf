@@ -49,7 +49,7 @@ resource "aws_security_group" "webservers" {
 
 #Define a instância da máquina EC2
 resource "aws_instance" "wordpress" {
-  count = var.instance_count
+  count                       = var.instance_count
   ami                         = var.ami_wordpress
   instance_type               = var.instance_type
   key_name                    = var.ssh_key
@@ -58,7 +58,7 @@ resource "aws_instance" "wordpress" {
   subnet_id                   = aws_subnet.public_az_a.id
   associate_public_ip_address = true
 
-  user_data = <<-EOF
+  /* user_data = <<-EOF
     #!/bin/bash
     sudo apt update && sudo apt install curl ansible unzip -y
 
@@ -79,7 +79,7 @@ resource "aws_instance" "wordpress" {
       --extra-vars "wordpress_db_username=${aws_db_instance.this.username}" \
       --extra-vars "wordpress_db_password=${aws_db_instance.this.password}" \
       --extra-vars "wordpress_address=${aws_instance.wordpress.public_ip}"
-  EOF
+  EOF */
 
   /* user_data                   = <<-EOF
               #!/bin/bash 
@@ -114,9 +114,3 @@ resource "aws_instance" "wordpress" {
     aws_db_instance.this
   ]
 }
-
-resource "local_file" "ip_do_wordpress" {
-  content  = aws_instance.wordpress.public_ip
-  filename = "${path.module}/ansible/ip_do_wordpress.txt"
-}
-
