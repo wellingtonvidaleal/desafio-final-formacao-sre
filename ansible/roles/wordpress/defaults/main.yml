@@ -1,0 +1,7 @@
+---
+wordpress_db_host: change_me
+wordpress_db_name: change_me
+wordpress_db_username: change_me
+wordpress_db_password: change_me
+
+wordpress_address: change_me

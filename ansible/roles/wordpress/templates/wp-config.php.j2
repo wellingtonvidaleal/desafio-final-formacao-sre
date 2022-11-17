@@ -20,16 +20,16 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'wordpress' );
+define( 'DB_NAME', '{{ wordpress_db_name }}' );
 
 /** Database username */
-define( 'DB_USER', 'wpuser' );
+define( 'DB_USER', '{{ wordpress_db_username }}' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'roZ9922XrOKnIv8mMf1laJzs2yQ7x8' );
+define( 'DB_PASSWORD', '{{ wordpress_db_password }}' );
 
 /** Database hostname */
-define( 'DB_HOST', 'terraform-20221115213124370900000002.cvsmjqu4xrsk.us-east-1.rds.amazonaws.com' );
+define( 'DB_HOST', '{{ wordpress_db_host }}' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );

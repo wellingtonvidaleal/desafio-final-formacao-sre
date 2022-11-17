@@ -1,4 +1,9 @@
 ---
+  - name: Aborta se usuário do DB for inválido
+    fail:
+      msg: A variável wordpress_db_user não pode ser 'root'
+    when: '{{ wordpress_db_user }} == "root"'
+
   - name: Instalacao do nginx e php para o funcionamento do Wordpress
     apt:
       pkg:
@@ -20,8 +25,8 @@
       state: present
   
   - name: Configuracao do vhost nginx
-    template:
-      src: vhost.nginx.conf.j2
+    copy:
+      src: vhost.nginx.conf
       dest: /etc/nginx/sites-enabled/default 
   
   - name : Baixando o projeto do Wordpress e descompactando 
