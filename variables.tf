@@ -2,89 +2,101 @@
 #-------------------------
 
 variable "region" {
-  #  default = "us-east-1"
+  type = string
   default = "us-east-1"
 }
 
-variable "vpcCIDRblock" {
+variable "vpc_cidr_block" {
+  type = string
   default = "10.132.0.0/16"
 }
 
-variable "vpcInstanceTenancy" {
+variable "vpc_instance_tenancy" {
+  type = string
   default = "default"
 }
 
-variable "vpcDnsSupport" {
+variable "vpc_dns_support" {
+  type = bool
   default = true
 }
 
-variable "vpcDnsHostNames" {
+variable "vpc_dns_host_names" {
+  type = bool
   default = true
 }
 
-#Sub-redes
-variable "subnetPub_AZ_ACIDRblock" {
+#Subnets
+variable "subnet_public_az_a_cidr_block" {
+  type = string
   default = "10.132.0.0/24"
 }
 
-variable "subnetPub_AZ_BCIDRblock" {
+variable "subnet_public_az_b_cidr_block" {
+  type = string
   default = "10.132.1.0/24"
 }
 
-variable "subnetPriv_AZ_ACIDRblock" {
+variable "subnet_private_az_a_cidr_block" {
+  type = string
   default = "10.132.2.0/24"
 }
 
-variable "subnetPriv_AZ_BCIDRblock" {
+variable "subnet_private_az_b_cidr_block" {
+  type = string
   default = "10.132.3.0/24"
 }
 
-variable "availabilityZoneA" {
-  #default = "us-east-1a"
+variable "availability_zone_a" {
+  type = string
   default = "us-east-1a"
 }
 
-variable "availabilityZoneB" {
-  #default = "us-east-1b"
+variable "availability_zone_b" {
+  type = string
   default = "us-east-1b"
 }
 
-variable "mapPublicIPPublicas" {
+variable "map_public_ip_publics" {
+  type = bool
   default = true
 }
 
-variable "mapPublicIPPrivadas" {
+variable "map_public_ip_privates" {
+  type = bool
   default = false
 }
 
-variable "ipsDeDestinosPublicosCIDRblock" {
+variable "all_ips_cidr_block" {
+  type = string
   default = "0.0.0.0/0"
 }
 
-variable "redeDaVPCCIDRblock" {
-  default = "10.132.0.0/16"
-}
-
-variable "balanceadorDeCarga" {
-  default = "0.0.0.0/0" #Substituir pelo IP do balanceador de carga
-}
-
-variable "meuIP" {
+variable "my_ip" {
+  type = string
   default = "0.0.0.0/0"
 }
 
 
 #ec2.tf
 #-------------------------
-variable "amiWordpress" {
+variable "instance_count" {
+  type = number
+  default = 2
+}
+
+variable "ami_wordpress" {
   #AMI Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
+  type = string
   default = "ami-0149b2da6ceec4bb0"
 }
 
-variable "instanceTypeWordpress" {
+variable "instance_type" {
+  type = string
   default = "t2.micro"
 }
 
-variable "chaveSSH" {
+variable "ssh_key" {
+  type = string
   default = "devops"
 }
