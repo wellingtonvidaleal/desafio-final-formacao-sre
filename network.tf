@@ -13,7 +13,7 @@ resource "aws_vpc" "this" {
 #Set subnets
 resource "aws_subnet" "public_az_a" {
   vpc_id                  = aws_vpc.this.id
-  cidr_block              = var.subnet_private_az_a_cidr_block
+  cidr_block              = var.subnet_public_az_a_cidr_block
   map_public_ip_on_launch = var.map_public_ip_publics
   availability_zone       = var.availability_zone_a
 
