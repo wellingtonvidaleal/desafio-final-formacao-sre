@@ -77,7 +77,6 @@ variable "my_ip" {
   default = "0.0.0.0/0"
 }
 
-
 #ec2.tf
 #-------------------------
 variable "instance_count" {

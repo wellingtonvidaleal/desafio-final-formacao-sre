@@ -58,18 +58,12 @@ resource "aws_instance" "wordpress" {
   subnet_id                   = aws_subnet.public_az_a.id
   associate_public_ip_address = true
 
-  /* user_data = <<-EOF
+  user_data = <<-EOF
     #!/bin/bash
-    sudo apt update && sudo apt install curl ansible unzip -y
+    sudo apt update && sudo apt install git curl ansible unzip -y
 
-    # wget https://github.com/well/desafio-final-formacao-sre.zip
-    # unzip desafio-final-formacao-sre.zip
-    # cd desafio-final-formacao-sre/ansible/
-    # ansible-playbook ...
-
-    cd /tmp
-    wget https://esseeutenhocertezaqueninguemcriou.s3.amazonaws.com/ansible.zip
-    unzip ansible.zip
+    git clone https://github.com/wellingtonvidaleal/ansible-desafio-final-formacao-sre.git
+    cd ansible-desafio-final-formacao-sre
 
     sudo ansible-playbook wordpress.yml \
       --inventory 'localhost,' \
@@ -79,32 +73,7 @@ resource "aws_instance" "wordpress" {
       --extra-vars "wordpress_db_username=${aws_db_instance.this.username}" \
       --extra-vars "wordpress_db_password=${aws_db_instance.this.password}" \
       --extra-vars "wordpress_address=${aws_instance.wordpress.public_ip}"
-  EOF */
-
-  /* user_data                   = <<-EOF
-              #!/bin/bash 
-              sudo apt update && sudo apt install curl ansible unzip -y 
-              cd /tmp
-              wget https://esseeutenhocertezaqueninguemcriou.s3.amazonaws.com/ansible.zip
-              unzip ansible.zip
-              sudo ansible-playbook wordpress.yml
-              EOF */
-
-
-  /*   provisioner "remote-exec" {
-    inline = ["echo 'Aguardando até o SSH estar disponivel'"]
-
-    connection {
-      type        = "ssh"
-      user        = "local.ssh_user"
-      private_key = file(local.private_key_path)
-      host        = aws_instance.wordpress.public_ip
-    }
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook ./ansible/wordpress.yml -i ${aws_instance.wordpress.public_ip} --user ${local.ssh_user} --key-file ${local.private_key_path}"
-  } */
+  EOF
 
   tags = {
     Name = "Wordpress"
