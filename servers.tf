@@ -71,12 +71,12 @@ resource "aws_instance" "wordpress" {
       --extra-vars "wordpress_db_host=${aws_db_instance.this.address}" \
       --extra-vars "wordpress_db_name=${aws_db_instance.this.db_name}" \
       --extra-vars "wordpress_db_username=${aws_db_instance.this.username}" \
-      --extra-vars "wordpress_db_password=${aws_db_instance.this.password}" \
-      --extra-vars "wordpress_address=${aws_instance.wordpress.public_ip}"
+      --extra-vars "wordpress_db_password=${aws_db_instance.this.password}"
+      
   EOF
 
   tags = {
-    Name = "Wordpress"
+    Name = "Wordpress_${count.index}"
   }
 
   depends_on = [
