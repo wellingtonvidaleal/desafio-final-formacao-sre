@@ -22,7 +22,7 @@ resource "aws_security_group" "webservers" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block, var.all_ips_cidr_block]
   }
 
   ingress {
@@ -30,7 +30,7 @@ resource "aws_security_group" "webservers" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block, var.all_ips_cidr_block]
   }
 
   egress {
@@ -61,7 +61,7 @@ resource "aws_instance" "wordpress" {
   user_data = <<-EOF
     #!/bin/bash
     sudo apt update && sudo apt install git curl ansible unzip -y
-
+    cd /tmp
     git clone https://github.com/wellingtonvidaleal/ansible-desafio-final-formacao-sre.git
     cd ansible-desafio-final-formacao-sre
 

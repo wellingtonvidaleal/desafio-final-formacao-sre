@@ -44,5 +44,5 @@ resource "aws_db_instance" "this" {
 
 resource "local_file" "db_endpoint" {
   content  = aws_db_instance.this.address
-  filename = "${path.module}/ansible/endpoint_do_banco_mysql.txt"
+  filename = "${path.module}/endpoint_do_banco_mysql.txt"
 }
