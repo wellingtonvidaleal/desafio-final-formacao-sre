@@ -22,10 +22,14 @@ resource "aws_elasticache_subnet_group" "this" {
 }
 
 resource "aws_elasticache_cluster" "this" {
-  cluster_id           = "sessions"
-  engine               = "memcached"
-  node_type            = var.node_type
-  num_cache_nodes      = 2
-  parameter_group_name = "default.memcached1.6"
-  port                 = 11211
+  cluster_id                   = "sessions"
+  engine                       = "memcached"
+  node_type                    = var.node_type
+  num_cache_nodes              = 2
+  parameter_group_name         = "default.memcached1.6"
+  port                         = 11211
+  az_mode                      = "cross-az"
+  preferred_availability_zones = []
+  apply_immediately            = true
+  subnet_group_name            = aws_elasticache_subnet_group.this.name
 }

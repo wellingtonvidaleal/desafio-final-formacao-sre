@@ -104,7 +104,7 @@ variable "ssh_key" {
 #-------------------------
 
 variable "instance_class" {
-  type = string
+  type    = string
   default = "db.t3.micro"
 }
 
@@ -112,6 +112,6 @@ variable "instance_class" {
 #-------------------------
 
 variable "node_type" {
-  type = string
+  type    = string
   default = "cache.t3.micro"
 }
