@@ -1,7 +1,3 @@
-locals {
-  db_instance_class = "db.${var.instance_type}"
-}
-
 resource "aws_db_subnet_group" "this" {
   name       = "db_subnet_group"
   subnet_ids = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
@@ -31,7 +27,7 @@ resource "aws_db_instance" "this" {
   allocated_storage      = 10
   engine                 = "mysql"
   engine_version         = "5.7.40"
-  instance_class         = local.db_instance_class
+  instance_class         = var.instance_class
   db_name                = "wordpress"
   username               = "wpuser"
   password               = "roZ9922XrOKnIv8mMf1laJzs2yQ7x8"

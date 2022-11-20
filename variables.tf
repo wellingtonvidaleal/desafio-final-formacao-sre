@@ -81,7 +81,7 @@ variable "my_ip" {
 #-------------------------
 variable "instance_count" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "ami_wordpress" {
@@ -98,4 +98,20 @@ variable "instance_type" {
 variable "ssh_key" {
   type    = string
   default = "devops"
+}
+
+#databases.tf
+#-------------------------
+
+variable "instance_class" {
+  type = string
+  default = "db.t3.micro"
+}
+
+#elasticache.tf
+#-------------------------
+
+variable "node_type" {
+  type = string
+  default = "cache.t3.micro"
 }
