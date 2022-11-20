@@ -74,6 +74,8 @@ resource "aws_instance" "wordpress" {
       --extra-vars "wordpress_db_password=${aws_db_instance.this.password}" \
       --extra-vars "file_system_id=${aws_efs_file_system.this.id}" \
       --extra-vars "aws_region=${var.region}"
+    
+    sudo mount -a
       
   EOF
 
