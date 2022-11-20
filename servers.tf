@@ -73,7 +73,8 @@ resource "aws_instance" "wordpress" {
       --extra-vars "wordpress_db_username=${aws_db_instance.this.username}" \
       --extra-vars "wordpress_db_password=${aws_db_instance.this.password}" \
       --extra-vars "file_system_id=${aws_efs_file_system.this.id}" \
-      --extra-vars "aws_region=${var.region}"
+      --extra-vars "aws_region=${var.region}" \
+      --extra-vars "session_save_path=${aws_elasticache_cluster.this.configuration_endpoint}"
     
     sudo mount -a
       
