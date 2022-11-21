@@ -48,7 +48,7 @@ resource "aws_lb" "this" {
   subnets            = [aws_subnet.public_az_a.id, aws_subnet.public_az_b.id]
   //security_groups                  = [aws_security_group.load_balance.id]
   enable_cross_zone_load_balancing = true
-  enable_deletion_protection       = true
+  enable_deletion_protection       = false
 
   tags = {
     Environment = "production"
