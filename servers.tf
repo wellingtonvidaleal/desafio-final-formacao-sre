@@ -85,6 +85,6 @@ resource "aws_instance" "wordpress" {
   }
 
   depends_on = [
-    aws_db_instance.this
+    aws_db_instance.this, aws_efs_file_system.this, aws_elasticache_cluster.this
   ]
 }

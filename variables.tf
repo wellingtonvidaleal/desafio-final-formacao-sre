@@ -81,7 +81,7 @@ variable "my_ip" {
 #-------------------------
 variable "instance_count" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "ami_wordpress" {
