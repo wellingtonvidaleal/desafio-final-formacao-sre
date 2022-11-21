@@ -64,7 +64,7 @@ resource "aws_lb_target_group" "this" {
 
   health_check {
     enabled  = true
-    path     = "/info.php"
+    path     = "/phpinfo.php"
     port     = "80"
     protocol = "HTTP"
   }
