@@ -81,7 +81,7 @@ resource "aws_instance" "wordpress" {
   EOF
 
   tags = {
-    Name = "Wordpress_${count.index}"
+    Name = "wordpress_${count.index}"
   }
 
   depends_on = [

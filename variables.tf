@@ -81,7 +81,7 @@ variable "my_ip" {
 #-------------------------
 variable "instance_count" {
   type    = number
-  default = 2
+  default = 3
 }
 
 variable "ami_wordpress" {
@@ -114,4 +114,14 @@ variable "instance_class" {
 variable "node_type" {
   type    = string
   default = "cache.t3.micro"
+}
+
+#load_balancer.tf
+#-------------------------
+variable "ports" {
+  type = map(number)
+  default = {
+    http  = 80
+    https = 443
+  }
 }
