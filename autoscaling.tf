@@ -4,11 +4,12 @@ resource "aws_placement_group" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
-  name                = "autoscaling_desafio_final"
+  name = "autoscaling_desafio_final"
+  #availability_zones = [var.availability_zone_a, var.availability_zone_b]
   desired_capacity    = 2
   max_size            = 8
   min_size            = 2
-  vpc_zone_identifier = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
+  vpc_zone_identifier = [aws_subnet.public_az_a.id, aws_subnet.public_az_b.id]
 
   launch_template {
     id      = aws_launch_template.this.id

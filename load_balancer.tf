@@ -25,7 +25,7 @@ resource "aws_security_group" "load_balance" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
   }
 
   egress {
@@ -33,7 +33,7 @@ resource "aws_security_group" "load_balance" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
   }
 
   tags = {
@@ -46,7 +46,7 @@ resource "aws_lb" "this" {
   internal           = false
   load_balancer_type = "network"
   subnets            = [aws_subnet.public_az_a.id, aws_subnet.public_az_b.id]
-  //security_groups                  = [aws_security_group.load_balance.id]
+  #security_groups                  = [aws_security_group.load_balance.id]
   enable_cross_zone_load_balancing = true
   enable_deletion_protection       = false
 
