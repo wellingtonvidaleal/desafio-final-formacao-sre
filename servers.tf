@@ -56,7 +56,7 @@ resource "aws_instance" "wordpress" {
   monitoring                  = true
   vpc_security_group_ids      = [aws_security_group.webservers.id]
   subnet_id                   = aws_subnet.private_az_a.id
-  associate_public_ip_address = false
+  associate_public_ip_address = true
 
   user_data = <<-EOF
     #!/bin/bash
