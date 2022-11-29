@@ -22,7 +22,7 @@ resource "aws_security_group" "webservers" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block, var.all_ips_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
   }
 
   ingress {
@@ -30,7 +30,7 @@ resource "aws_security_group" "webservers" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block, var.all_ips_cidr_block]
+    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
   }
 
   egress {
@@ -49,14 +49,14 @@ resource "aws_security_group" "webservers" {
 
 #Define a instância da máquina EC2
 resource "aws_instance" "wordpress" {
-  count                       = var.instance_count
+  #count                       = var.instance_count
   ami                         = var.ami_wordpress
   instance_type               = var.instance_type
   key_name                    = var.ssh_key
   monitoring                  = true
   vpc_security_group_ids      = [aws_security_group.webservers.id]
-  subnet_id                   = aws_subnet.public_az_a.id
-  associate_public_ip_address = true
+  subnet_id                   = aws_subnet.private_az_a.id
+  associate_public_ip_address = false
 
   user_data = <<-EOF
     #!/bin/bash
@@ -81,7 +81,8 @@ resource "aws_instance" "wordpress" {
   EOF
 
   tags = {
-    Name = "wordpress_${count.index}"
+    #Name = "wordpress_${count.index}"
+    Name = "wordpress"
   }
 
   depends_on = [
