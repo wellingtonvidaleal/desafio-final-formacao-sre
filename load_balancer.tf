@@ -57,11 +57,11 @@ resource "aws_lb" "this" {
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.this.arn
-  protocol = "TCP"
-  port     = 80
+  protocol          = "TCP"
+  port              = 80
 
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.http.arn
   }
 }
@@ -72,8 +72,9 @@ resource "aws_lb_target_group" "http" {
   vpc_id   = aws_vpc.this.id
 
   health_check {
-    enabled  = true
-    path     = "/phpinfo.php"
+    enabled = true
+    #path     = "/phpinfo.php"
+    path     = "/"
     port     = "80"
     protocol = "HTTP"
   }
@@ -85,11 +86,11 @@ resource "aws_lb_target_group" "http" {
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.this.arn
-  protocol = "TCP"
-  port     = 443
+  protocol          = "TCP"
+  port              = 443
 
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.https.arn
   }
 }
@@ -101,7 +102,7 @@ resource "aws_lb_target_group" "https" {
 
   health_check {
     enabled  = true
-    path     = "/phpinfo.php"
+    path     = "/"
     port     = "443"
     protocol = "HTTPS"
   }
