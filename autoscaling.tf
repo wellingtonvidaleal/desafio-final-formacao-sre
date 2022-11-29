@@ -55,4 +55,7 @@ resource "aws_autoscaling_policy" "this" {
       }
     }
   }
+  depends_on = [
+    aws_autoscaling_group.this
+  ]
 }
