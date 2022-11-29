@@ -25,7 +25,7 @@ resource "aws_security_group" "load_balance" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
   }
 
   egress {
@@ -33,7 +33,7 @@ resource "aws_security_group" "load_balance" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
   }
 
   tags = {
@@ -55,10 +55,47 @@ resource "aws_lb" "this" {
   }
 }
 
-resource "aws_lb_target_group" "this" {
-  for_each = var.ports
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.this.arn
+  protocol = "TCP"
+  port     = 80
 
-  port     = each.value
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.http.arn
+  }
+}
+
+resource "aws_lb_target_group" "http" {
+  port     = 80
+  protocol = "TCP"
+  vpc_id   = aws_vpc.this.id
+
+  health_check {
+    enabled  = true
+    path     = "/phpinfo.php"
+    port     = "80"
+    protocol = "HTTP"
+  }
+
+  depends_on = [
+    aws_lb.this
+  ]
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.this.arn
+  protocol = "TCP"
+  port     = 443
+
+  default_action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.https.arn
+  }
+}
+
+resource "aws_lb_target_group" "https" {
+  port     = 443
   protocol = "TCP"
   vpc_id   = aws_vpc.this.id
 
@@ -72,22 +109,4 @@ resource "aws_lb_target_group" "this" {
   depends_on = [
     aws_lb.this
   ]
-
-  /* lifecycle {
-    create_before_destroy = true
-  } */
-}
-
-resource "aws_lb_listener" "this" {
-  for_each = var.ports
-
-  load_balancer_arn = aws_lb.this.arn
-
-  protocol = "TCP"
-  port     = each.value
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.this[each.key].arn
-  }
 }
