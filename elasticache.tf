@@ -4,11 +4,11 @@ resource "aws_security_group" "sessions" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description = "Libera entrada na porta do Elasticache para os servidores web que estao nas subredes publicas"
+    description = "Libera entrada na porta do Elasticache para os servidores web que estao nas subredes privadas"
     from_port   = 11211
     to_port     = 11211
     protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
   }
 
   tags = {

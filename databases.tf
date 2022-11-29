@@ -9,12 +9,11 @@ resource "aws_security_group" "databases" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description = "Libera entrada na porta do MySQL para os servidores web que estao nas subredes publicas)"
+    description = "Libera entrada na porta do MySQL para os servidores web que estao nas subredes privadas)"
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    #Trocar por subnets privadas após implementar o load balance
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    cidr_blocks = [var.subnet_private_az_a_cidr_block, var.subnet_private_az_b_cidr_block]
   }
 
   tags = {
