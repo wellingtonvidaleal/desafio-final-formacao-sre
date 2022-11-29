@@ -16,9 +16,14 @@ resource "aws_autoscaling_group" "this" {
   }
 }
 
-resource "aws_autoscaling_attachment" "this" {
+resource "aws_autoscaling_attachment" "http" {
   autoscaling_group_name = aws_autoscaling_group.this.id
   lb_target_group_arn    = aws_lb_target_group.http.arn
+}
+
+resource "aws_autoscaling_attachment" "https" {
+  autoscaling_group_name = aws_autoscaling_group.this.id
+  lb_target_group_arn    = aws_lb_target_group.https.arn
 }
 
 resource "aws_autoscaling_policy" "this" {
