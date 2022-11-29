@@ -118,10 +118,10 @@ variable "node_type" {
 
 #load_balancer.tf
 #-------------------------
-variable "ports" {
+/* variable "ports" {
   type = map(number)
   default = {
     http  = 80
     https = 443
   }
-}
+} */
