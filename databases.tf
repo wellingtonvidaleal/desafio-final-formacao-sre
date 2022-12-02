@@ -9,11 +9,11 @@ resource "aws_security_group" "databases" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description = "Libera entrada na porta do MySQL para os servidores web que estao nas subredes privadas)"
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    description     = "Libera entrada na porta do MySQL para os servidores web que estao nas subredes privadas)"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.wordpress.id]
   }
 
   tags = {

@@ -9,7 +9,12 @@ resource "aws_autoscaling_group" "this" {
   desired_capacity    = 2
   max_size            = 8
   min_size            = 2
-  vpc_zone_identifier = [aws_subnet.public_az_a.id, aws_subnet.public_az_b.id]
+  vpc_zone_identifier = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
+
+  target_group_arns = [
+    # aws_lb_target_group.http.arn,
+    aws_lb_target_group.https.arn,
+  ]
 
   launch_template {
     id      = aws_launch_template.this.id
@@ -17,26 +22,25 @@ resource "aws_autoscaling_group" "this" {
   }
 }
 
-resource "aws_autoscaling_attachment" "http" {
-  autoscaling_group_name = aws_autoscaling_group.this.id
-  lb_target_group_arn    = aws_lb_target_group.http.arn
+# LB
+# TARGET GROUP
+#   ASG
+#   LISTENER
+#
+# INTERWEBS => LB => LISTENER => TARGET GROUP => ASG
 
-  depends_on = [
-    aws_autoscaling_group.this
-  ]
-}
+# resource "aws_autoscaling_attachment" "http" {
+#   autoscaling_group_name = aws_autoscaling_group.this.id
+#   lb_target_group_arn    = aws_lb_target_group.http.arn
+# }
 
-resource "aws_autoscaling_attachment" "https" {
-  autoscaling_group_name = aws_autoscaling_group.this.id
-  lb_target_group_arn    = aws_lb_target_group.https.arn
-
-  depends_on = [
-    aws_autoscaling_group.this
-  ]
-}
+# resource "aws_autoscaling_attachment" "https" {
+#   autoscaling_group_name = aws_autoscaling_group.this.id
+#   lb_target_group_arn    = aws_lb_target_group.https.arn
+# }
 
 resource "aws_autoscaling_policy" "this" {
-  autoscaling_group_name = "autoscaling_desafio_final"
+  autoscaling_group_name = aws_autoscaling_group.this.name
   name                   = "50percentCPU"
   policy_type            = "PredictiveScaling"
   predictive_scaling_configuration {
@@ -64,7 +68,4 @@ resource "aws_autoscaling_policy" "this" {
       }
     }
   }
-  depends_on = [
-    aws_autoscaling_group.this
-  ]
 }

@@ -4,11 +4,11 @@ resource "aws_security_group" "storage" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description = "Todo trafego de subredes privadas onde estao os servidores web para dentro"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = [var.subnet_public_az_a_cidr_block, var.subnet_public_az_b_cidr_block]
+    description     = "Todo trafego de subredes privadas onde estao os servidores web para dentro"
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.wordpress.id]
   }
 
   tags = {
