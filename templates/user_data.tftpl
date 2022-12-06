@@ -17,7 +17,7 @@ sudo ansible-playbook wordpress.yml \
   --extra-vars "file_system_id=${file_system_id}" \
   --extra-vars "aws_region=${aws_region}" \
   --extra-vars "session_save_path=${session_save_path}" \
-  --extra-vars "wordpress_wp_home=${wordpress_db_password}" \
-  --extra-vars "wordpress_wp_siteurl=${wordpress_db_password}"
+  --extra-vars "wordpress_wp_home=${wordpress_wp_home}" \
+  --extra-vars "wordpress_wp_siteurl=${wordpress_wp_siteurl}"
 
 sudo mount -a
