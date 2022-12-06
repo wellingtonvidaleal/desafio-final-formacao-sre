@@ -36,8 +36,3 @@ resource "aws_db_instance" "this" {
   skip_final_snapshot    = true
   #backup_retention_period = 7
 }
-
-resource "local_file" "db_endpoint" {
-  content  = aws_db_instance.this.address
-  filename = "${path.module}/endpoint_do_banco_mysql.txt"
-}
