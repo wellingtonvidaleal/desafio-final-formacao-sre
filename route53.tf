@@ -1,10 +1,10 @@
-resource "aws_route53_zone" "primary" {
-  name          = "wellingtonvidaleal.com.br"
-  force_destroy = false
+data "aws_route53_zone" "primary" {
+  name         = "wellingtonvidaleal.com.br."
+  private_zone = false
 }
 
 resource "aws_route53_record" "root" {
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
   name    = "wellingtonvidaleal.com.br"
   type    = "A"
 
@@ -16,7 +16,7 @@ resource "aws_route53_record" "root" {
 }
 
 resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
   name    = "www.wellingtonvidaleal.com.br"
   type    = "CNAME"
   ttl     = 300
@@ -24,7 +24,7 @@ resource "aws_route53_record" "www" {
 }
 
 /* resource "aws_route53_record" "monitoring" {
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
   name    = "monitoring.wellingtonvidaleal.com.br"
   type    = "A"
 
