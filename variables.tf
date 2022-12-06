@@ -128,11 +128,11 @@ variable "node_type" {
 
 
 variable "wp_home" {
-  type = string
+  type    = string
   default = "https://wellingtonvidaleal.com.br"
 }
 
 variable "wp_siteurl" {
-  type = string
+  type    = string
   default = "https://wellingtonvidaleal.com.br"
 }
