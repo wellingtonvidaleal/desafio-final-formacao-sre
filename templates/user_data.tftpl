@@ -1,0 +1,23 @@
+#!/bin/bash
+
+sudo apt update && sudo apt install git curl ansible unzip -y
+
+cd /tmp
+git clone https://github.com/wellingtonvidaleal/ansible-desafio-final-formacao-sre.git
+
+cd ansible-desafio-final-formacao-sre
+
+sudo ansible-playbook wordpress.yml \
+  --inventory 'localhost,' \
+  --connection local \
+  --extra-vars "wordpress_db_host=${wordpress_db_host}" \
+  --extra-vars "wordpress_db_name=${wordpress_db_name}" \
+  --extra-vars "wordpress_db_username=${wordpress_db_username}" \
+  --extra-vars "wordpress_db_password=${wordpress_db_password}" \
+  --extra-vars "file_system_id=${file_system_id}" \
+  --extra-vars "aws_region=${aws_region}" \
+  --extra-vars "session_save_path=${session_save_path}" \
+  --extra-vars "wordpress_wp_home=${wordpress_db_password}" \
+  --extra-vars "wordpress_wp_siteurl=${wordpress_db_password}"
+
+sudo mount -a

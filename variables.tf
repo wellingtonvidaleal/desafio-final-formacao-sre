@@ -125,3 +125,14 @@ variable "node_type" {
     https = 443
   }
 } */
+
+
+variable "wp_home" {
+  type = string
+  default = "https://wellingtonvidaleal.com.br"
+}
+
+variable "wp_siteurl" {
+  type = string
+  default = "https://wellingtonvidaleal.com.br"
+}

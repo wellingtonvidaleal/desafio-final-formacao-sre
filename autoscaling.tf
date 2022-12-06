@@ -12,8 +12,8 @@ resource "aws_autoscaling_group" "this" {
   vpc_zone_identifier = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
 
   target_group_arns = [
-    # aws_lb_target_group.http.arn,
-    aws_lb_target_group.https.arn,
+    aws_lb_target_group.http.arn,
+    # aws_lb_target_group.https.arn,
   ]
 
   launch_template {

@@ -71,7 +71,7 @@ resource "aws_eip" "this" {
 #Set NAT gateway
 resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.this.id
-  subnet_id     = aws_subnet.private_az_a.id
+  subnet_id     = aws_subnet.public_az_a.id
   depends_on = [
     aws_internet_gateway.this
   ]
