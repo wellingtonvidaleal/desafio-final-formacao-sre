@@ -27,6 +27,14 @@ resource "aws_security_group" "wordpress" {
     security_groups = [aws_security_group.load_balancer.id]
   }
 
+  ingress {
+    description     = "Aceita todas as conexoes vindas do security group prometheus"
+    from_port       = 0
+    to_port         = 0
+    protocol        = -1
+    security_groups = [aws_security_group.prometheus.id]
+  }
+
   egress {
     description = "Saida para qualquer IP em qualquer porta"
     from_port   = 0
