@@ -1,0 +1,14 @@
+#!/bin/bash
+
+sudo apt update && sudo apt install git curl ansible unzip -y
+
+cd /tmp
+git clone https://github.com/wellingtonvidaleal/ansible-desafio-final-formacao-sre.git
+
+cd ansible-desafio-final-formacao-sre
+
+sudo ansible-playbook prometheus.yml \
+  --inventory 'localhost,' \
+  --connection local \
+  --extra-vars "prometheus_iam_access_key=${prometheus_iam_access_key}" \
+  --extra-vars "prometheus_iam_secret_key=${prometheus_iam_secret_key}"
