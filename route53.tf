@@ -23,15 +23,10 @@ resource "aws_route53_record" "www" {
   records = [aws_route53_record.root.name]
 }
 
-/* resource "aws_route53_record" "monitoring" {
+resource "aws_route53_record" "monitoring" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "monitoring.wellingtonvidaleal.com.br"
   type    = "A"
-
-  alias {
-    name                   = aws_lb.load_balancer_prometheus.dns_name
-    zone_id                = aws_lb.load_balancer_prometheus.zone_id
-    evaluate_target_health = true
-  }
-} */
-
+  ttl     = "300"
+  records = [aws_instance.prometheus.public_ip]
+}

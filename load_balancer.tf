@@ -1,7 +1,7 @@
 #Define o grupo de segurança do load balancer
 resource "aws_security_group" "load_balancer" {
   name        = "load_balancer"
-  description = "Definicao de acessos dos balanceador de carga"
+  description = "Definicao de acessos do balanceador de carga"
   vpc_id      = aws_vpc.this.id
 
   ingress {
