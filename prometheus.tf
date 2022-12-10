@@ -146,6 +146,6 @@ output "prometheus_access_key" {
 }
 
 output "prometheus_secret_key" {
-  value = aws_iam_access_key.prometheus.secret
+  value     = aws_iam_access_key.prometheus.secret
   sensitive = true
 }
