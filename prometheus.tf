@@ -88,7 +88,7 @@ resource "aws_iam_user" "prometheus" {
 
   tags = merge(local.monitoring_tags,
     {
-      Name = "${var.environment}-monitoring"
+      Name    = "${var.environment}-monitoring"
       tag-key = "tag-value"
     }
   )
