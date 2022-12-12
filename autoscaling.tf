@@ -1,5 +1,5 @@
 resource "aws_placement_group" "this" {
-  name     = "test"
+  name     = "wordpress"
   strategy = "cluster"
 
   tags = merge(local.wordpress_tags,
@@ -11,10 +11,10 @@ resource "aws_placement_group" "this" {
 
 #Define o grupo do autoscaling para trabalhar nas AZs A e B, e seu comportamento
 resource "aws_autoscaling_group" "this" {
-  name                = "autoscaling_desafio_final"
-  desired_capacity    = 2
+  name                = "wordpress"
+  desired_capacity    = 1
   max_size            = 8
-  min_size            = 2
+  min_size            = 1
   vpc_zone_identifier = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
 
   target_group_arns = [

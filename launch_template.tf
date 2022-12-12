@@ -38,8 +38,8 @@ resource "aws_security_group" "wordpress" {
 
   ingress {
     description     = "Aceita todas as conexoes vindas do security group prometheus na porta 9113"
-    from_port       = 9113
-    to_port         = 9113
+    from_port       = 9913
+    to_port         = 9913
     protocol        = "tcp"
     security_groups = [aws_security_group.prometheus.id]
   }
