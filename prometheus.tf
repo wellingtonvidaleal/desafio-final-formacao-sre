@@ -61,7 +61,7 @@ locals {
 
 #Define o EC2 do Prometheus
 resource "aws_instance" "prometheus" {
-  ami                         = var.ami_wordpress
+  ami                         = "ami-0574da719dca65348"
   instance_type               = var.instance_type
   key_name                    = var.ssh_key
   monitoring                  = true
@@ -139,13 +139,4 @@ resource "aws_iam_group_membership" "monitorin_prometheus" {
   ]
 
   group = aws_iam_group.monitoring.name
-}
-
-output "prometheus_access_key" {
-  value = aws_iam_access_key.prometheus.id
-}
-
-output "prometheus_secret_key" {
-  value     = aws_iam_access_key.prometheus.secret
-  sensitive = true
 }

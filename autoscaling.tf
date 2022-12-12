@@ -4,8 +4,7 @@ resource "aws_placement_group" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
-  name = "autoscaling_desafio_final"
-  #availability_zones = [var.availability_zone_a, var.availability_zone_b]
+  name                = "autoscaling_desafio_final"
   desired_capacity    = 2
   max_size            = 8
   min_size            = 2
@@ -13,7 +12,6 @@ resource "aws_autoscaling_group" "this" {
 
   target_group_arns = [
     aws_lb_target_group.http.arn,
-    # aws_lb_target_group.https.arn,
   ]
 
   launch_template {
@@ -21,23 +19,6 @@ resource "aws_autoscaling_group" "this" {
     version = "$Latest"
   }
 }
-
-# LB
-# TARGET GROUP
-#   ASG
-#   LISTENER
-#
-# INTERWEBS => LB => LISTENER => TARGET GROUP => ASG
-
-# resource "aws_autoscaling_attachment" "http" {
-#   autoscaling_group_name = aws_autoscaling_group.this.id
-#   lb_target_group_arn    = aws_lb_target_group.http.arn
-# }
-
-# resource "aws_autoscaling_attachment" "https" {
-#   autoscaling_group_name = aws_autoscaling_group.this.id
-#   lb_target_group_arn    = aws_lb_target_group.https.arn
-# }
 
 resource "aws_autoscaling_policy" "this" {
   autoscaling_group_name = aws_autoscaling_group.this.name

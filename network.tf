@@ -5,9 +5,11 @@ resource "aws_vpc" "this" {
   enable_dns_support   = var.vpc_dns_support
   enable_dns_hostnames = var.vpc_dns_host_names
 
-  tags = {
-    Name = "vpc_desafio_final"
-  }
+  tags = merge(local.infra_tags,
+    {
+      Name = "${var.environment}-desafio-final"
+    }
+  )
 }
 
 #Set subnets
@@ -17,9 +19,11 @@ resource "aws_subnet" "public_az_a" {
   map_public_ip_on_launch = var.map_public_ip_publics
   availability_zone       = var.availability_zone_a
 
-  tags = {
-    Name = "public_az_a"
-  }
+  tags = merge(local.infra_tags,
+    {
+      Name = "${var.environment}-public-az-a"
+    }
+  )
 }
 
 resource "aws_subnet" "public_az_b" {
@@ -28,9 +32,11 @@ resource "aws_subnet" "public_az_b" {
   map_public_ip_on_launch = var.map_public_ip_publics
   availability_zone       = var.availability_zone_b
 
-  tags = {
-    Name = "public_az_b"
-  }
+  tags = merge(local.infra_tags,
+    {
+      Name = "${var.environment}-public-az-b"
+    }
+  )
 }
 
 resource "aws_subnet" "private_az_a" {

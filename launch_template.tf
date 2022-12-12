@@ -35,6 +35,14 @@ resource "aws_security_group" "wordpress" {
     security_groups = [aws_security_group.prometheus.id]
   }
 
+  ingress {
+    description     = "Aceita todas as conexoes vindas do security group prometheus na porta 9113"
+    from_port       = 9113
+    to_port         = 9113
+    protocol        = "tcp"
+    security_groups = [aws_security_group.prometheus.id]
+  }
+
   egress {
     description = "Saida para qualquer IP em qualquer porta"
     from_port   = 0
@@ -43,9 +51,11 @@ resource "aws_security_group" "wordpress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "wordpress"
-  }
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "wordpress"
+    }
+  )
 }
 
 locals {

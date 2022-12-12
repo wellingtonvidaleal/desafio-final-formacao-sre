@@ -23,6 +23,7 @@ resource "aws_security_group" "databases" {
 
 #Define o banco de dados MySQL
 resource "aws_db_instance" "this" {
+  # identifier             = "wordpress"
   allocated_storage      = 10
   engine                 = "mysql"
   engine_version         = "5.7.40"
@@ -35,4 +36,6 @@ resource "aws_db_instance" "this" {
   vpc_security_group_ids = [aws_security_group.databases.id]
   skip_final_snapshot    = true
   #backup_retention_period = 7
+
+  tags = local.wordpress_tags
 }
