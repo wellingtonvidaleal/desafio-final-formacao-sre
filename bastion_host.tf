@@ -1,4 +1,4 @@
-#Define o grupo de segurança
+#Define o grupo de segurança do bastion host
 resource "aws_security_group" "bastion_host" {
   name        = "bastion_host"
   description = "Definicao de acessos do bastion host"
@@ -20,12 +20,14 @@ resource "aws_security_group" "bastion_host" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "bastion_host"
-  }
+  tags = merge(local.security_tags,
+    {
+      Name = "${var.environment}-bastion-host"
+    }
+  )
 }
 
-#Define o EC2 bastion host que acessará os outros EC2
+#Define o EC2 bastion host para acessar os recursos presentes nas redes privadas
 resource "aws_instance" "bastion_host" {
   ami                         = var.ami_wordpress
   instance_type               = var.instance_type
@@ -41,7 +43,9 @@ resource "aws_instance" "bastion_host" {
 
   EOF
 
-  tags = {
-    Name = "bastion_host"
-  }
+  tags = merge(local.security_tags,
+    {
+      Name = "${var.environment}-bastion-host"
+    }
+  )
 }

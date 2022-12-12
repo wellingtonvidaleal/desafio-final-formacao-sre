@@ -61,6 +61,7 @@ locals {
 
 #Define o EC2 do Prometheus
 resource "aws_instance" "prometheus" {
+  #AMI Ubuntu Server 22.04 LTS (HVM), SSD Volume Type
   ami                         = "ami-0574da719dca65348"
   instance_type               = var.instance_type
   key_name                    = var.ssh_key

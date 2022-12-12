@@ -1,3 +1,4 @@
+#Define o security group das instâncias EC2 do Wordpress
 resource "aws_security_group" "wordpress" {
   name        = "wordpress"
   description = "Definicao de acessos dos servidores de aplicacao do Wordpress"
@@ -53,7 +54,7 @@ resource "aws_security_group" "wordpress" {
 
   tags = merge(local.wordpress_tags,
     {
-      Name = "wordpress"
+      Name = "${var.environment}-wordpress"
     }
   )
 }
@@ -75,6 +76,7 @@ locals {
   )
 }
 
+#Define o launch template que será utilizado pelo autoscaling para subir as instâncias EC2 do Wordpress
 resource "aws_launch_template" "this" {
   image_id                             = var.ami_wordpress
   instance_initiated_shutdown_behavior = "terminate"
@@ -91,8 +93,10 @@ resource "aws_launch_template" "this" {
   tag_specifications {
     resource_type = "instance"
 
-    tags = {
-      Name = "wordpress"
-    }
+    tags = merge(local.wordpress_tags,
+      {
+        Name = "${var.environment}-wordpress"
+      }
+    )
   }
 }

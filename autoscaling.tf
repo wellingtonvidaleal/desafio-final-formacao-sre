@@ -1,8 +1,15 @@
 resource "aws_placement_group" "this" {
   name     = "test"
   strategy = "cluster"
+
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress"
+    }
+  )
 }
 
+#Define o grupo do autoscaling para trabalhar nas AZs A e B, e seu comportamento
 resource "aws_autoscaling_group" "this" {
   name                = "autoscaling_desafio_final"
   desired_capacity    = 2
@@ -20,6 +27,7 @@ resource "aws_autoscaling_group" "this" {
   }
 }
 
+#Define a política de criação de novas instâncias do Wordpress. Quando a soma do processamento das instâncias disponíveis alcançar 50%, o autoscaling sobe mais instâncias
 resource "aws_autoscaling_policy" "this" {
   autoscaling_group_name = aws_autoscaling_group.this.name
   name                   = "50percentCPU"

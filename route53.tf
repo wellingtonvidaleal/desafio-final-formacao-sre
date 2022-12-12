@@ -1,3 +1,4 @@
+#Importa a zona de DNS primária wellingtonvidaleal.com.br definida pelo outro subprojeto do terraform "route53-zone"
 data "aws_route53_zone" "primary" {
   name         = "wellingtonvidaleal.com.br."
   private_zone = false

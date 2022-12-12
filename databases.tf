@@ -1,8 +1,16 @@
+#Define o grupo de sub-rede do banco
 resource "aws_db_subnet_group" "this" {
   name       = "db_subnet_group"
   subnet_ids = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
+
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-databases"
+    }
+  )
 }
 
+#Define o security group do banco
 resource "aws_security_group" "databases" {
   name        = "databases"
   description = "Definicao de acessos dos servidores de bancos de dados"
@@ -16,14 +24,16 @@ resource "aws_security_group" "databases" {
     security_groups = [aws_security_group.wordpress.id]
   }
 
-  tags = {
-    Name = "databases"
-  }
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-databases"
+    }
+  )
 }
 
-#Define o banco de dados MySQL
+#Define o banco de dados MySQL que será utilizado pelo Wordpress
 resource "aws_db_instance" "this" {
-  # identifier             = "wordpress"
+  identifier             = "wordpress"
   allocated_storage      = 10
   engine                 = "mysql"
   engine_version         = "5.7.40"

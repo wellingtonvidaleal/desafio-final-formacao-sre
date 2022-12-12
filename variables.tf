@@ -1,3 +1,4 @@
+#common
 variable "environment" {
   type    = string
   default = "production"
@@ -121,17 +122,7 @@ variable "node_type" {
   default = "cache.t3.micro"
 }
 
-#load_balancer.tf
-#-------------------------
-/* variable "ports" {
-  type = map(number)
-  default = {
-    http  = 80
-    https = 443
-  }
-} */
-
-
+#wordpress
 variable "wp_home" {
   type    = string
   default = "https://wellingtonvidaleal.com.br"
