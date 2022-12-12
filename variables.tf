@@ -32,7 +32,6 @@ variable "vpc_dns_host_names" {
   default = true
 }
 
-#Subnets
 variable "subnet_public_az_a_cidr_block" {
   type    = string
   default = "10.132.0.0/24"
@@ -83,7 +82,7 @@ variable "my_ip" {
   default = "0.0.0.0/0"
 }
 
-#ec2.tf
+#launch_template.tf
 #-------------------------
 variable "instance_count" {
   type    = number
