@@ -28,9 +28,11 @@ resource "aws_security_group" "load_balancer" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "load_balancer"
-  }
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress"
+    }
+  )
 }
 
 #Cria o load balancer
@@ -42,9 +44,11 @@ resource "aws_lb" "this" {
   subnets                    = [aws_subnet.public_az_a.id, aws_subnet.public_az_b.id]
   enable_deletion_protection = false
 
-  tags = {
-    Environment = "production"
-  }
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress"
+    }
+  )
 }
 
 #Define os listeners do load balancer
@@ -60,6 +64,12 @@ resource "aws_lb_listener" "https" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.http.arn
   }
+
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress-https"
+    }
+  )
 }
 
 resource "aws_lb_listener" "http" {
@@ -76,6 +86,12 @@ resource "aws_lb_listener" "http" {
       status_code = "HTTP_301"
     }
   }
+  
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress-http"
+    }
+  )
 }
 
 resource "aws_lb_target_group" "http" {
@@ -89,4 +105,10 @@ resource "aws_lb_target_group" "http" {
     port     = "80"
     protocol = "HTTP"
   }
+
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress"
+    }
+  )
 }

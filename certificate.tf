@@ -1,46 +1,4 @@
-# variable "records" {
-#   default = {
-#     www = {
-#       name   = "www.wellingtonvidaleal.com.br"
-#       record = "wellingtonvidaleal.com.br"
-#       ttl    = 600
-#       type   = "CNAME"
-#     }
-#     monitoring = {
-#       name   = "monitoring.wellingtonvidaleal.com.br"
-#       record = "monitoring-abc1234.us-east-1.elb.amazonaws.com"
-#       ttl    = 600
-#       type   = "CNAME"
-#     }
-#   }
-# }
-
-# resource "aws_route53_record" "all_records" {
-#   for_each = var.records
-
-#   zone_id = aws_route53_zone.primary.zone_id
-#   name    = each.value.name
-#   type    = each.value.type
-#   ttl     = each.value.ttl
-#   records = [each.value.record]
-# }
-
-# variables "temp" {
-#   default = {
-#     "*.wellingtonvidaleal.com.br" = {
-#       name   = "akslakslk"
-#       record = "anabnsbansbas"
-#       type   = "CNAME"
-#     }
-#     "wellingtonvidaleal.com.br" = {
-#       name   = "akslakslk"
-#       record = "anabnsbansbas"
-#       type   = "CNAME"
-#     }
-#   }
-# }
-
-
+#Define a geração do certificado wildcard válido pela própria AWS, e define o método de validação por DNS
 resource "aws_acm_certificate" "this" {
   domain_name               = "wellingtonvidaleal.com.br"
   validation_method         = "DNS"
@@ -49,8 +7,15 @@ resource "aws_acm_certificate" "this" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = merge(local.wordpress_tags,
+    {
+      Name = "${var.environment}-wordpress"
+    }
+  )
 }
 
+#Define o registro de validação
 resource "aws_route53_record" "validation" {
   for_each = {
     for dvo in aws_acm_certificate.this.domain_validation_options :
@@ -70,6 +35,7 @@ resource "aws_route53_record" "validation" {
   records = [each.value.record]
 }
 
+#Define o recurso de validação do certificado
 resource "aws_acm_certificate_validation" "this" {
   certificate_arn = aws_acm_certificate.this.arn
 
@@ -78,21 +44,3 @@ resource "aws_acm_certificate_validation" "this" {
     r.fqdn
   ]
 }
-
-/* output "validation_00_records" {
-  value = aws_route53_record.validation
-}
-
-output "validation_01_fqdns" {
-  value = [
-    for r in aws_route53_record.validation :
-    r.fqdn
-  ]
-} */
-
-# aws_route53_record.www.zone_id
-
-# aws_route53_record.validation["*.wellingtonvidaleal.com.br"].name
-
-# terraform state show aws_route53_record.validation["wellingtonvidaleal.com.br"]
-

@@ -1,7 +1,7 @@
 #Define o grupo de segurança
 resource "aws_security_group" "prometheus" {
   name        = "prometheus"
-  description = "Definicao de acessos do bastion host"
+  description = "Definicao de acessos do Prometheus"
   vpc_id      = aws_vpc.this.id
 
   ingress {
@@ -13,25 +13,17 @@ resource "aws_security_group" "prometheus" {
   }
 
   ingress {
-    description = "Libera entrada de tudo"
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    description = "HTTP de fora para dentro"
-    from_port   = 80
-    to_port     = 80
+    description = "Servico do Prometheus de fora para dentro"
+    from_port   = 9090
+    to_port     = 9090
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    description = "HTTPS de fora para dentro"
-    from_port   = 443
-    to_port     = 443
+    description = "Servico do grafana de fora para dentro"
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -44,9 +36,11 @@ resource "aws_security_group" "prometheus" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "prometheus"
-  }
+  tags = merge(local.monitoring_tags,
+    {
+      Name = "${var.environment}-monitoring"
+    }
+  )
 }
 
 locals {
@@ -72,9 +66,11 @@ resource "aws_instance" "prometheus" {
 
   user_data = base64encode(local.user_data_prometheus)
 
-  tags = {
-    Name = "prometheus"
-  }
+  tags = merge(local.monitoring_tags,
+    {
+      Name = "${var.environment}-prometheus"
+    }
+  )
 }
 
 resource "aws_iam_group" "monitoring" {
@@ -86,9 +82,16 @@ resource "aws_iam_user" "prometheus" {
   name = "prometheus"
   path = "/system/"
 
-  tags = {
-    tag-key = "tag-value"
-  }
+  # tags = {
+  #   tag-key = "tag-value"
+  # }
+
+  tags = merge(local.monitoring_tags,
+    {
+      Name = "${var.environment}-monitoring"
+      tag-key = "tag-value"
+    }
+  )
 }
 
 resource "aws_iam_access_key" "prometheus" {
@@ -130,6 +133,7 @@ resource "aws_iam_user_policy" "prometheus_ro" {
     ]
 }
 EOF
+
 }
 
 resource "aws_iam_group_membership" "monitorin_prometheus" {
