@@ -1,5 +1,10 @@
 #!/bin/bash
 
+exec >> /var/log/userdata.log
+exec 2>&1
+
+sleep 10
+
 sudo apt update && sudo apt install git curl ansible unzip -y
 
 cd /tmp
