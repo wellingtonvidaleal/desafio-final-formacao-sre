@@ -12,6 +12,7 @@ Esse projeto trata-se do Desafio Final do aluno Wellington Vida Leal, da 3ª tur
 Ao baixar o projeto, entre no diretorio "route53-zone" e execute os seguintes comandos:
 
 ```sh
+cd desafio-final-formacao-sre/route53-zone/
 terraform init
 terraform validate
 terraform plan
@@ -23,6 +24,7 @@ A execução desse projeto terraform gera como outputs os name servers da zona d
 Após o cadastro dos name servers, volte na raiz do projeto e execute os seguintes comando:
 
 ```sh
+cd desafio-final-formacao-sre/
 terraform init
 terraform validate
 terraform plan
