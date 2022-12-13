@@ -26,3 +26,7 @@ sudo ansible-playbook wordpress.yml \
   --extra-vars "wordpress_wp_siteurl=${wordpress_wp_siteurl}"
 
 sudo mount -a
+
+wget https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.11.0/nginx-prometheus-exporter_0.11.0_linux_amd64.tar.gz
+tar -xzf nginx-prometheus-exporter_0.11.0_linux_amd64.tar.gz
+./nginx-prometheus-exporter -nginx.scrape-uri=http://localhost:80/status
