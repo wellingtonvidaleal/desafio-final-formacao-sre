@@ -66,4 +66,10 @@ _______________________________________________________
 _______________________________________________________
 ***BASTION HOST
 
-*Mostrar o arquivo bastion_host.tf e explicar para que ele é utilizado (time de cloud-sec).
+*Mostrar o arquivo bastion_host.tf e explicar que ele foi utilizado (pelo time fictício de cloud-sec) para testes e trobleshotting dos recursos que estão nas subnets privadas.
+
+_______________________________________________________
+AGRADECIMENTOS
+
+*Elven Works
+*Flaudísio
