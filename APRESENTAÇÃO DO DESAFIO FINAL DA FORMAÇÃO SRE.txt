@@ -1,0 +1,69 @@
+*****APRESENTAÇÃO DO DESAFIO FINAL DA FORMAÇÃO SRE*****
+
+*Mostrar o fim da execução dos comandos no terminal:
+
+terraform init
+terraform validate
+terraform plan
+terraform apply
+
+_______________________________________________________
+
+**NO NAGEDADOR
+_______________________________________________________
+
+*Mostrar Wordpress funcionando no navegador (wellingtonvidaleal.com.br).
+
+*Fazer upload das imagens nas mídias.
+
+*Criar página "Teste de galeria de imagens" com uma galeria de imagens.
+
+*Criar página "Teste de vídeo" com um vídeo do YouTube (https://youtu.be/bTSXMURCwNg).
+
+*Mostrar a página wellingtonvidaleal.com.br/phpinfo.php, e sem sessions mostrar a configuração do memcached.
+
+*Mostrar o Prometheus funcionando no navedaor (monitoring.wellingtonvidaleal.com.br:9090), mostrar o arquivo de configuração e listar os targets registrados automaticamente.
+
+*Mostrar o Grafana funcionando no navegador (monitoring.wellingtonvidaleal.com.br:3000), e mostrar o registro automático feito pelo Ansible do datasource Prometheus, dos dashboards do Node Exporter e do Nginx Exporter.
+
+*Repositório do projeto no GitHub https://github.com/wellingtonvidaleal/desafio-final-formacao-sre
+
+
+_______________________________________________________
+
+**NO CÓDIGO E NO CONSOLE
+_______________________________________________________
+
+***ESTRUTURA NECESSÁRIA PARA O WORDPRESS FUNCIONAR
+
+*Mostrar o diretório "route53-zone" do projeto, o main.tf, e o output.tf. Explicar que foi comprado um domínio válido para que fosse possível a criação e utilização de um certificado SSL válido, e assim possibilitando a utilização do load balancer no modo application.
+
+*Mostrar os registros de DNS no do output do route53-zone cadastrados https://registro.br/painel/dominios/?dominio=wellingtonvidaleal.com.br
+
+*Mostrar o main.tf do projeto, e falar sobre as default tags, e do arquivo de variáveis utilizado em todo o código.
+
+*Mostrar a definição da VPC realizada nos arquivos network.tf e routes.tf, e já comentar sobre as boas práticas do tagueamento dos recursos utilizando o locals do arquivo tags.tf.
+
+*Mostrar a importação da zona primária no arquivo route53.tf, e os registros de DNS, finalizando assim a infra-core do projeto.
+
+*Mostrar os recursos que serão utilizados dentro das instâncias EC2 do Wordpress (databases.tf, storage.tf, elasticache.tf).
+
+*Mostrar o arquivo launch_template.tf definindo a EC2, e chamando todos os recursos necessários pelo locals que chama o user_data.tftpl.
+
+*Mostrar o autoscaling.tf que utiliza o launch_template e registra as instâncias no target group do load_balancer.
+
+*Mostrar o load_balancer.tf, que utiliza um certificado válido gerado pelo certificate.tf (mostrar o certificado no navegador).
+
+_______________________________________________________
+***ESTRUTURA PARA O MONITORAMENTO VIA PROMETHEUS E GRAFANA
+
+*Mostrar o arquivo prometheus.tf
+
+*Explicar o playbook do prometheus.
+
+*Trabalhos futuros: implementar o prometheus em subnet privada atrás de um load balancer.
+
+_______________________________________________________
+***BASTION HOST
+
+*Mostrar o arquivo bastion_host.tf e explicar para que ele é utilizado (time de cloud-sec).
