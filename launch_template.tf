@@ -59,6 +59,7 @@ resource "aws_security_group" "wordpress" {
   )
 }
 
+#Define a execução de comandos dentro da instância EC2, e a chamada da ferramenta de gestão de configuração Ansible
 locals {
   user_data = templatefile(
     "${path.module}/templates/user_data.tftpl",

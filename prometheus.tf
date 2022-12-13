@@ -1,4 +1,4 @@
-#Define o grupo de segurança
+#Define o grupo de segurança do Prometheus
 resource "aws_security_group" "prometheus" {
   name        = "prometheus"
   description = "Definicao de acessos do Prometheus"
@@ -53,7 +53,7 @@ locals {
   )
 }
 
-#Define o EC2 do Prometheus
+#Define o EC2 do Prometheus e Grafana
 resource "aws_instance" "prometheus" {
   #AMI Ubuntu Server 22.04 LTS (HVM), SSD Volume Type
   ami                         = "ami-0574da719dca65348"
@@ -81,10 +81,6 @@ resource "aws_iam_group" "monitoring" {
 resource "aws_iam_user" "prometheus" {
   name = "prometheus"
   path = "/system/"
-
-  # tags = {
-  #   tag-key = "tag-value"
-  # }
 
   tags = merge(local.monitoring_tags,
     {

@@ -4,6 +4,7 @@ data "aws_route53_zone" "primary" {
   private_zone = false
 }
 
+#Define que o registro de DNS wellingtonvidaleal.com.br aponta para o load balancer da aplicação do Wordpress
 resource "aws_route53_record" "root" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "wellingtonvidaleal.com.br"
@@ -16,6 +17,7 @@ resource "aws_route53_record" "root" {
   }
 }
 
+#Define que o CNAME www.wellingtonvidaleal.com.br aponta para a registro root
 resource "aws_route53_record" "www" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "www.wellingtonvidaleal.com.br"
@@ -24,6 +26,7 @@ resource "aws_route53_record" "www" {
   records = [aws_route53_record.root.name]
 }
 
+#Define que o registro de DNS monitoring.wellingtonvidaleal.com.br aponta para o IP público da instância do Prometheus/Grafana
 resource "aws_route53_record" "monitoring" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "monitoring.wellingtonvidaleal.com.br"

@@ -12,9 +12,9 @@ resource "aws_placement_group" "this" {
 #Define o grupo do autoscaling para trabalhar nas AZs A e B, e seu comportamento
 resource "aws_autoscaling_group" "this" {
   name                = "wordpress"
-  desired_capacity    = 1
+  desired_capacity    = 4
   max_size            = 8
-  min_size            = 1
+  min_size            = 4
   vpc_zone_identifier = [aws_subnet.private_az_a.id, aws_subnet.private_az_b.id]
 
   target_group_arns = [

@@ -35,7 +35,7 @@ resource "aws_security_group" "load_balancer" {
   )
 }
 
-#Cria o load balancer
+#Cria o load balancer nas sub-redes públicas
 resource "aws_lb" "this" {
   name                       = "wordpress"
   internal                   = false
@@ -94,6 +94,7 @@ resource "aws_lb_listener" "http" {
   )
 }
 
+#Define o target group do load balancer e o health check que é realizado no /status das instâncias
 resource "aws_lb_target_group" "http" {
   port     = 80
   protocol = "HTTP"

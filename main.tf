@@ -9,6 +9,7 @@ terraform {
   required_version = ">= 1.2.0"
 }
 
+#Definição do provider AWS, da região a ser utilizada e das tags padrões
 provider "aws" {
   region = var.region
 
