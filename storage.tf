@@ -37,10 +37,16 @@ resource "aws_efs_file_system" "this" {
   )
 }
 
-#Define o ponto de montagem do EFS na sub-rede privada
-resource "aws_efs_mount_target" "this" {
+#Define o ponto de montagem do EFS na sub-rede privada nas duas zonas de disponibilidade
+resource "aws_efs_mount_target" "private_az_a" {
   file_system_id  = aws_efs_file_system.this.id
   subnet_id       = aws_subnet.private_az_a.id
+  security_groups = ["${aws_security_group.storage.id}"]
+}
+
+resource "aws_efs_mount_target" "private_az_b" {
+  file_system_id  = aws_efs_file_system.this.id
+  subnet_id       = aws_subnet.private_az_b.id
   security_groups = ["${aws_security_group.storage.id}"]
 }
 
